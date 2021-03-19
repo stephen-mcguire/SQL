@@ -1,0 +1,79 @@
+select *
+from [JJ].[ADDRESS]
+
+
+select *
+from [JJ].[CUSTOMER]
+
+select *
+from [JJ].[ORDERS]
+
+select *
+from [JJ].[PRODUCTS]
+
+select *
+from [JJ].[SALES_REP]
+
+
+insert into [JJ].[ADDRESS]
+select [Customer ID], [Address1], [City], [State], [Zip Code]
+from EXCEL_TEST
+
+
+insert into [JJ].[CUSTOMER]
+select [Customer ID],[Customer Name],[Contact],[Email Address],[Phone]
+from [dbo].[EXCEL_TEST]
+
+insert into [JJ].[ORDERS]
+select [Order ID],[Order Date],[Payment Type],[Product ID],[Quantity]
+from EXCEL_TEST
+
+insert into [JJ].[PRODUCTS]
+select [Product ID],[Product Name],[Description],[Cost],[Markup Percent]
+from [dbo].['EXCEL_PRODUCTS]
+
+
+insert into [JJ].[SALES_REP]
+select [Rep Name],[Rep Phone],[Rep SSN],[Hire Date],[SalesRep Photo]
+from [dbo].[EXCEL_TEST]
+
+
+create schema JJ
+go
+create table JJ.ADDRESS (
+	Cust_ID int NOT NULL,
+	Address nchar(100) NOT NULL,
+	City nchar(85) NOT NULL,
+	State nchar(2) NOT NULL,
+	ZipCode int NOT NULL
+);
+create table JJ.CUSTOMER (
+Cust_ID	int	NOT NULL,
+Business_Name	nchar(50) NOT NULL,
+Cust_Contact	nchar(50) NOT NULL,
+Cust_Email	nchar(50) Null,
+Cust_Phone	nvarchar(50) NOT NULL
+);
+create table JJ.ORDERS (
+	Order_ID int NOT NULL,
+	Order_Date nchar(8) NOT NULL,
+	Payment_Type varchar(15) NOT NULL,
+	Product_ID int NOT NULL,
+	Quantity int NOT NULL
+);
+create table JJ.PRODUCTS (
+	Product_ID int NOT NULL,
+	Product_Name nchar(30) NOT NULL,
+	Description nchar(50) NOT NULL,
+	Cost float NOT NULL,
+	Markup_Percent float NOT NULL
+);
+create table JJ.SALES_REP (
+	Rep_FirstName nchar(50) NOT NULL,
+	Rep_LastName nchar(50) NOT NULL,
+	Rep_Phone nchar(10) NOT NULL,
+	Rep_SSN nchar(9) NOT NULL,
+	Rep_HireDate varchar(10) NOT NULL,
+	Rep_Photo image NULL
+);
+
