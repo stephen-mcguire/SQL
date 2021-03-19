@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.852
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "lab7ssis1", "lab7ssis1\lab7ssis1.dtproj", "{DCD78183-3C86-482A-B481-C936804207AF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DCD78183-3C86-482A-B481-C936804207AF}.Development|Default.ActiveCfg = Development
+		{DCD78183-3C86-482A-B481-C936804207AF}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {60F9235F-5277-4AC5-9E6F-A1D04B788899}
+	EndGlobalSection
+EndGlobal

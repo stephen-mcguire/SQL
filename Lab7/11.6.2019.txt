@@ -1,0 +1,30 @@
+our task will be to deliver an SSIS package that reads the transnational data from the Eddy_sales database and populate the fact table FACT_StudentDailySales in the Eddy_SalesDW database.
+
+- You can view the data in both databases using your own login.
+
+- In the SSISS package, you need to connect to the source and destination databases using the etl_admin user (password is given in class)
+
+- You do not need to populate the FACT_DailySales table. The FACT_StudentDailySales is a more simplified version that you need to populate.
+
+- You do not need to worry about populating the dimension tables.
+
+- Your deliverable is an SSIS package file that you will upload to the Lab7 folder under Assignments.
+
+Email me to esemaan@pstcc.edu if you have any questions.
+
+user / pass to use the ssis junnk in visual studio
+etl_admin
+etl_admin1
+
+
+Read blogs from: 
+Pinal Dave 
+https://blog.sqlauthority.com/
+
+and 
+
+Brent Ozar
+https://www.brentozar.com/
+
+Q&A
+willturcios@outlook.com

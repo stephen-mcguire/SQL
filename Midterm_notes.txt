@@ -1,0 +1,39 @@
+--USE [SaleCo]
+--select * from [dbo].[ACCT_TRANSACTION]
+
+--3. invoice number, customer number, invoice date and, for each product ordered, product code, product description, the number of units ordered, 
+--price of the product at the time of the order. 
+
+use SaleCo
+select i.[INV_DATE] as [Invoice Date], i.[INV_NUMBER] as [Invoice Number], c.[CUST_NUMBER] as [Customer Number], /*i.[INV_DATE],*/ p.[PROD_CODE] as [Product Code], p.[PROD_DESCRIPT] as [Product Description],l.[LINE_UNITS] as [Qty Sold], p.[PROD_PRICE] as [Product Price]
+from INVOICE as i
+inner join CUSTOMER as c on i.[CUST_NUMBER] = c.CUST_NUMBER
+	inner join LINE as l on l.INV_NUMBER = i.INV_NUMBER
+		inner join PRODUCT as p on l.[PROD_CODE] = p.PROD_CODE
+
+--The invoice tracking coordinator is complaining that the query he is given is running very slowly. 
+--To try to speed it up, you need to ensure the proper primary keys and the appropriate indexes are in place.
+
+--1.List the primary keys and the indexes that need to be in place (10 pts). 
+--For the primary keys, specify the table name and the column(s) name(s). For Indexes, specify an index name and the table/column(s) on which it would be created.
+/*PK on CUSTOMER.CUST_NUMBER && we would need an index on CUST_NUMBER such as create nonclustered index IDX_CUST_NUMBER on SaleCo.CUSTOMER (CUST_NUMBER)
+PK on INVOICE.INV_NUMBER && we would need an index on INV_NUMBER such as create nonclustered index IDX_INV_NUMBER on SaleCo.INVOICE (INV_NUMBER)
+PK on LINE.LINE_NUMBER && we would need an index on LINE_NUMBER such as create nonclustered index IDX_LINE_NUMBER on SaleCo.LINE (LINE_NUMBER)
+PK on PRODUCT.PROD_NUMBER && we would need an index on PROD_NUMBER such as create nonclustered index IDX_PROD_NUMBER on SaleCo.PRODUCT (PROD_NUMBER)
+*/
+--2.	Choose two of the indexes you have listed above, place an asterisk(*) next to each of your choices, --
+--then provide the DDL to create those indexes (write it below) (5 pts)
+--use SaleCo
+--create nonclustered index IDX_CUST_NUMBER on SaleCo.CUSTOMER (CUST_NUMBER)
+--create nonclustered index IDX_LINE_NUMBER on SaleCo.LINE (LINE_NUMBER)
+
+
+--3.	Choose one of the primary keys you specified above, place an asterisk(*) next to it, 
+--then either provide the DDL below on how to create it or describe how to create it using SQL Server Management Studio (5 pts)
+--create clustered index IDX_PROD_NUMBER on SaleCo.PRODUCT (PROD_NUMBER)
+
+--A corporate risk analyst named Eddy Semaan will be visiting us at the end of the week to analyze our customer’s data 
+--and their payment history and their current outstanding invoice balances. 
+--An account has already been created for him on the database: auditor_esemaan
+
+select * from INVOICE

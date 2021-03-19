@@ -1,0 +1,58 @@
+select * from JJ.PRODUCTS
+
+use sbmcguire
+ 
+
+
+ -- how many order do we have per custome
+ use DessertDelights
+select c.customerid, c.FirstName, c.LastName, count(*) AS [Number of Orders]
+from Normalization.Customer c inner join Normalization.Orders o on c.customerid = o.CustomerId
+group by c.customerid, c.FirstName, c.LastName;
+
+/*
+use sbmcguire
+select sr.SalesRepID, sr.FirstName, sr.LastName, od.Quantity, p.ProductID, count(*) AS [Sales_Per_Rep]
+from JJ.LAB3_SALES_REPS sr 
+	inner join JJ.LAB3_ORDERS o on sr.SalesRepID = o.OrderID
+	 join JJ.LAB3_PRODUCTS p on od.OrderID = p.ProductID
+	inner join JJ.LAB3_ORDER_DETAILS od on od.OrderID = p.ProductID
+group by sr.SalesRepID, sr.FirstName, sr.LastName
+*/
+
+-- starting from scratch
+use sbmcguire
+select sr.SalesRepID, sr.FirstName, sr.LastName, od.Quantity, p.ProductID, count(*) as Sales_Per_Rep
+from JJ.LAB3_SALES_REPS sr, JJ.LAB3_ORDER_DETAILS od, JJ.LAB3_PRODUCTS p
+--inner join JJ.LAB3_ORDER_DETAILS od on od.OrderID = p.ProductID
+group by sr.SalesRepID, sr.FirstName, sr.LastName
+
+
+
+
+select * from [JJ].[LAB3_ORDER_DETAILS]
+
+select * from JJ.LAB3_ORDERS
+
+
+-- ask about why this is pulling more than one person
+SELECT DISTINCT /*sr.SalesRepID,*/ (sr.FirstName +' '+ sr.LastName) as SALES_REP, p.ProductID, od.Quantity  /*COUNT(*) as Sales_Per_Rep*/
+FROM JJ.LAB3_SALES_REPS AS sr 
+ JOIN JJ.LAB3_ORDER_DETAILS AS od
+    ON (sr.SalesRepID = od.OrderID)
+ join JJ.LAB3_PRODUCTS as p
+	ON p.ProductID = od.OrderID
+group by sr.SalesRepID, sr.FirstName, sr.LastName, od.Quantity, p.ProductID
+--order by  Sales_Per_Rep sr.SalesRepID, sr.FirstName, sr.LastName, od.Quantity, p.ProductID;
+
+
+
+
+--update on above statement 
+SELECT  sr.SalesRepID, (sr.FirstName +' '+ sr.LastName) as SALES_REP, p.ProductID, od.Quantity
+FROM JJ.LAB3_SALES_REPS AS sr, JJ.LAB3_PRODUCTS p, JJ.LAB3_ORDER_DETAILS od
+
+ 
+--where JJ.LAB3_ORDER_DETAILS.OrderID = JJ.LAB3_ORDERS.OrderID
+--group by sr.SalesRepID, sr.FirstName, sr.LastName, od.Quantity, p.ProductID
+--order by  Sales_Per_Rep sr.SalesRepID, sr.FirstName, sr.LastName, od.Quantity, p.ProductID;

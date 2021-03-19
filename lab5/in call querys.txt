@@ -1,0 +1,67 @@
+use DessertDelights
+
+Set statistics IO on
+use DessertDelights
+select count(*)
+from Optimization.allimporteddataDup
+
+-- use this from here on out. USe the "nolock" function when making the script
+--also, for debugging and process showing, use the "CTRL + L" or Display estimated execution plan
+select count(*)
+from Optimization.allimporteddataDup with (nolock)
+
+select *
+from Optimization.allimporteddataDup
+where BillingState = 'Tx' 
+
+use sbmcguire
+select * from [JJ].[LAB4_AllImportedData] with (nolock)
+
+
+
+--starting to use the index
+use DessertDelights 
+select product, count(*)
+from Optimization.allimporteddataDup
+group by Product
+
+
+--do these statements with UI stats on with and without na index 
+--table 'allimpirteddatadump'. scan count 1, logical reads 54245, physical reads 0, read-ahead 
+--table 'allimpirteddatadump'. scan count 1, logical reads 515, physical reads 0, read-ahead
+
+select * 
+from Optimization.allimporteddataDup with (nolock)
+where Product = 'cupcakes'
+
+--build an index. Note that it's non unique and non clustered
+	-- name of the index
+drop index product_IDX on optimization.allimporteddatadup
+create nonclustered index product_IDX on optimization.allimporteddatadup (Product);
+
+--making your own test index in your databse 
+use sbmcguire
+select * from JJ.LAB4_AllImportedData
+use sbmcguire
+create index test_AllImportData on JJ.LAB4_AllImportedData ([Product]);
+
+--sandbox table 
+select *
+into CustomersSandbox
+from JJ.LAB4_AllImportedData
+
+select count(*)
+from CustomersSandbox
+
+select * from CustomersSandbox
+
+--getting more 
+insert into CustomersSandbox
+select * from CustomersSandbox
+
+use DessertDelights
+select OrderDate, Product, sum(qty)
+from Optimization.allimporteddataDup
+where BillingState = 'TN' and SaleType='Dining'
+group by convert(date, orderdate), Product
+

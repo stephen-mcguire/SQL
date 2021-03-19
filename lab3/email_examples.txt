@@ -1,0 +1,19 @@
+-- populate it, don't use cursors which may be your first intince as a typical programmer. Db programming is different.
+drop table #temp
+select CustomerId, max(orderid) as LastOrderId
+into #temp
+from Normalization.orders
+group by CustomerId
+select * from #temp
+drop table #temp2
+select t.CustomerId, DelAddressId
+into #temp2
+from #temp t
+inner join Normalization.Orders o ON t.LastOrderId = o.OrderId
+select * from #temp2
+select * from DeNormalization.Customer
+MERGE DeNormalization.Customer c
+USING #temp2 t2
+ON c.customerid = t2.customerid
+WHEN MATCHED THEN
+UPDATE Set c.DelAddressId = t2.DeladdressId;

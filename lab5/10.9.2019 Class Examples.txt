@@ -1,0 +1,109 @@
+select NEWID();
+
+use sbmcguire
+select * from JJ.LAB4_AllImportedData
+
+
+drop index IX_id on JJ.LAB4_AllImportedData;
+
+create clustered index IX_Product on JJ.LAB4_AllImportedData (Product);
+
+
+
+
+---more query optimization
+use DessertDelights
+set statistics IO OFF
+drop index ID_IDX on opimization.AllimportedDataDup
+create nonclustered index ID_IDX on Optimization.AllImportedDataDup (ID);
+
+
+use DessertDelights
+select * from Optimization.allimporteddataDup
+where id=5137
+
+
+use DessertDelights
+update Optimization.allimporteddataDup
+set Qty=17
+where id=5137
+
+--same for an upodate statemet
+use DessertDelights
+select OrderDate, Product
+from Optimization.allimporteddataDup
+where BillingState = 'TN';
+
+-- note tje sugestion by the optmizer for a covering index
+use DessertDelights
+drop index  ID_BillingState on Optimization.allimporteddataDup
+--create nonclustered index ID_Billing
+
+use DessertDelights
+select OrderDate, Product
+from Optimization.allimporteddataDup
+where BillingState = 'TN' and SaleType ='Dining';
+--note that it's suggestingthat i create a compsote index
+
+select OrderDate, Product, SUM(Qty)
+from Optimization.allimporteddataDup
+where BillingState = 'TN' and SaleType = 'Dining'
+group by CONVERT(date, OrderDate), Product
+order by OrderDate;
+
+use DessertDelights
+select * 
+from Optimization.allimporteddataDup
+where BillingState = 'TN' and SaleType = 'Dining'
+--note this is
+
+select * 
+from Optimization.allimporteddataDup a
+	inner join Normalization.Products p on a.Product = p.ProductName
+
+--another way
+select OrderDate, Product, p.ProductId, p.Price 
+from Optimization.allimporteddataDup a
+	inner join Normalization.Products p on a.Product = p.ProductName
+-- it recomends building an index n the foreign key
+
+
+use DessertDelights
+set statistics io off
+drop index ID_IDX on Optimization.allimporteddataDup
+create nonclustered index ID_IDX on Optimization.allimporteddataDup (ID)
+drop index Product_IDX on Optimization.allimporteddataDup
+create nonclustered index Product_IDX on Optimization.allimporteddataDup (Product) include 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

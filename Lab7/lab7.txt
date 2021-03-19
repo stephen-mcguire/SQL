@@ -1,0 +1,56 @@
+select sum(DineInSales) as DineInSales, sum(TogoSales) as togosales
+from [dbo].[FACT_DailySales]
+where MajorGroupDimId = (select MajorGroupDimId from DIM_MajorGroups where MajorGroupName = 'Food')
+
+select top 10 * 
+from [dbo].[FACT_DailySales]
+
+select * 
+from [dbo].[DIM_MajorGroups]
+
+use Eddy_sales
+select *
+from [dbo].[CheckLineItemDetails]
+
+use Eddy_sales
+select *
+from [dbo].[Menu] 
+
+use Eddy_sales
+select *
+from [dbo].[MinorGroups]
+
+use Eddy_SalesDW
+select *
+from [dbo].[FACT_DailySales]
+
+
+use Eddy_SalesDW
+select *
+from [dbo].[FACT_StudentDailySales]
+
+use Eddy_sales
+select sum([Amount]) 
+from dbo.CheckLineItemDetails cld
+inner join dbo.Checks c on cld.CheckId = c.CheckID
+inner join Menu m on 
+group by CheckDate
+
+
+select * from [dbo].[Checks]
+
+select * from CheckLineItemDetails
+
+-- query for the eddydw database -- 
+use Eddy_sales
+select c.CheckDate, m.MenuItemId, ma.MajorGroupId, mi.MinorGroupId, c.PaymentType, sum(l.amount) as Amount
+from dbo.CheckLineItemDetails l
+inner join dbo.Checks c on c.checkid = l.checkid
+inner join dbo.Menu m on m.MenuItemId = l.MenuItemId
+inner join dbo.MinorGroups mi on mi.MinorGroupId = m.MinorGroupId
+inner join dbo.MajorGroups ma on ma.MajorGroupId = mi.MajorGroupId
+group by c.checkdate, m.MenuItemId, ma.MajorGroupId, mi.MinorGroupId, c.PaymentType;
+
+
+
+

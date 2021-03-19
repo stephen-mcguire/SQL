@@ -1,0 +1,19 @@
+--lab4 report 1
+select CONVERT(date, o.OrderDate) as DATE, sr.SalesRepID, sr.FirstName, sr.LastName, od.Quantity, p.Cost
+from JJ.LAB3_CUSTOMERS c
+	inner join JJ.LAB3_SALES_REPS sr on c.SalesRepID = sr.SalesRepID
+		inner join JJ.LAB3_ORDERS o on o.CustomerID = c.CustomerID
+			inner join JJ.LAB3_ORDER_DETAILS od on o.OrderID = od.OrderID
+				inner join JJ.PRODUCTS p on od.ProductID = p.Product_ID
+order by CONVERT(date, o.OrderDate) desc
+
+
+--lab4 report 2
+select CONVERT(date, o.OrderDate) as DATE, sr.SalesRepID, sr.FirstName, sr.LastName, SUM(od.Quantity * p.Cost) as [TOTAL SALES]
+from JJ.LAB3_CUSTOMERS c
+	inner join JJ.LAB3_SALES_REPS sr on c.SalesRepID = sr.SalesRepID
+		inner join JJ.LAB3_ORDERS o on o.CustomerID = c.CustomerID
+			inner join JJ.LAB3_ORDER_DETAILS od on o.OrderID = od.OrderID
+				inner join JJ.PRODUCTS p on od.ProductID = p.Product_ID
+group by CONVERT(date, o.OrderDate), sr.SalesRepID, sr.FirstName, sr.LastName
+order by CONVERT(date, OrderDate) desc
